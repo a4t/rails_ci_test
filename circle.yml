@@ -17,4 +17,4 @@ database:
 
 test:
   override:
-    - docker run -d -p 5000:5000 -e MYSQL_USER="root" -e MYSQL_PASSWORD="root" --link mysql:localhost a4t/rails_ci_test sh -c 'sudo apt-get update && sudo apt-get install ruby mysql-server && sudo gem install bundler && sudo gem install rspec && bundle exec rspec'
+    - docker run -v /home/ubuntu/rails_ci_test:/app -e MYSQL_USER="root" -e MYSQL_PASSWORD="root" --link mysql:localhost a4t/rails_ci_test sh -c 'sudo apt-get update && sudo apt-get install ruby mysql-server && sudo gem install bundler && sudo gem install rspec && cd /app && bundle install && bundle exec rspec test'
