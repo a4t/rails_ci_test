@@ -1,4 +1,10 @@
 machine:
+  environment:
+    MYSQL_USER: root
+    MYSQL_PASSWORD: hogehoge
+    MYSQL_HOST: mysql-server
+    MYSQL_TABLE: ci_test_test
+
   services:
     - docker
 
@@ -13,8 +19,8 @@ dependencies:
 
 database:
   override: 
-    - docker run -d -e MYSQL_ROOT_PASSWORD="root" --name mysql mysql:5.6.26 
+    - docker run -d -e MYSQL_ROOT_PASSWORD="${MYSQL_PASSWORD}" -e MYSQL_DATABASE="${MYSQL_TABLE}" --name mysql-server mysql:5.6.26 
 
 test:
   override:
-    - docker run -v /home/ubuntu/rails_ci_test:/app -e MYSQL_USER="root" -e MYSQL_PASSWORD="root" --link mysql:localhost a4t/rails_ci_test sh -c 'cd /app && bundle install && bundle exec rspec test'
+    - docker run -v /home/ubuntu/rails_ci_test:/app -e MYSQL_USER="${MYSQL_USER}" -e MYSQL_PASSWORD="${MYSQL_PASSWORD}" -e MYSQL_HOST="${MYSQL_HOST}" --link mysql-server:${MYSQL_HOST} a4t/rails_ci_test sh -c 'export RBENV_ROOT="/usr/local/rbenv" && export PATH="${RBENV_ROOT}/bin:${PATH}" && eval "$(rbenv init -)" && cd /app && bundle install && bundle exec rspec' 
