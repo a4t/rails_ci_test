@@ -12,7 +12,7 @@ dependencies:
     - mkdir -p ~/docker; docker save a4t/rails_ci_test > ~/docker/image.tar
 
 database:
-  post:
+  override: 
     - docker run -d --name mysql mysql:5.6.26 
 
 test:
