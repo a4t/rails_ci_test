@@ -5,7 +5,7 @@ machine:
 dependencies:
   cache_directories:
     - "~/docker"
-  pre:
+  override:
     - docker info
     - if [[ -e ~/docker/image.tar ]]; then docker load --input ~/docker/image.tar; fi
     - docker build -t a4t/rails_ci_test .
