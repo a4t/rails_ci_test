@@ -10,7 +10,11 @@ dependencies:
     - if [[ -e ~/docker/image.tar ]]; then docker load --input ~/docker/image.tar; fi
     - docker build -t a4t/rails_ci_test .
     - mkdir -p ~/docker; docker save a4t/rails_ci_test > ~/docker/image.tar
+
+database:
+  post:
+    - docker run -d --name mysql mysql:5.6.26 
+
 test:
   post:
-    - docker run -d --name mysql mysql:5.6.26
     - docker run -d -p 5000:5000 --link mysql:localhost a4t/rails_ci_test sh -c 'sudo apt-get update && sudo apt-get install ruby mysql-server && sudo gem install bundler && sudo gem install rspec && bundle exec rspec'
