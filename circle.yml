@@ -17,4 +17,4 @@ database:
 
 test:
   override: 
-    - docker run -d -p 5000:5000 --link mysql:localhost a4t/rails_ci_test sh -c 'sudo apt-get update && sudo apt-get install ruby mysql-server && sudo gem install bundler && sudo gem install rspec && bundle exec rspec'
+    - docker run -d -p 5000:5000 --link localhost:mysql a4t/rails_ci_test sh -c 'sudo apt-get update && sudo apt-get install ruby mysql-server && sudo gem install bundler && sudo gem install rspec && bundle exec rspec'
