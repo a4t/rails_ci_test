@@ -1,0 +1,21 @@
+version: '2.0'
+networks: {}
+
+services:
+  railscitest:
+    build: ./
+    volumes:
+      - ./:/var/rails_ci_test
+    links:
+      - mysql:ci.mysql
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=hogehoge
+      - MYSQL_HOST=ci.mysql
+      - MYSQL_TABLE=ci_test
+
+  mysql:
+    image: mysql:5.6.26
+    environment:
+      - MYSQL_ROOT_PASSWORD=hogehoge
+      - MYSQL_DATABASE=ci_test_test

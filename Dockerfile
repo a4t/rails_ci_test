@@ -9,8 +9,8 @@ RUN \
   git clone git://github.com/sstephenson/rbenv.git ${RBENV_ROOT} && \
   git clone git://github.com/sstephenson/ruby-build.git ${RBENV_ROOT}/plugins/ruby-build  && \
   eval "$(rbenv init -)" && \
-  rbenv install 2.2.0 && \
-  rbenv global 2.2.0
+  rbenv install 2.3.1 && \
+  rbenv global 2.3.1
 
 RUN \
   export RBENV_ROOT="/usr/local/rbenv" && \
