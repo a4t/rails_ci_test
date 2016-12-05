@@ -2,17 +2,18 @@ version: 0.1
 
 environment_variables:
   plaintext:
-    MYSQL_USER: ubuntu
-    MYSQL_PASSWORD:
+    MYSQL_USER: root
+    MYSQL_PASSWORD: hogehoge
     MYSQL_HOST: localhost
     MYSQL_TABLE: ci_test
 
 phases:
   install:
     commands:
-      - sudo apt-add-repository -y 'deb http://ppa.launchpad.net/ondrej/mysql-experimental/ubuntu precise main'
-      - sudo apt-get update; sudo DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server-5.6
-      - mysql -u ubuntu -e "CREATE DATABASE ci_test;"
+      - debconf-set-selections <<< "mysql-server-5.6 mysql-server/root_password password ${MYSQL_PASSWORD}"
+      - debconf-set-selections <<< "mysql-server-5.6 mysql-server/root_password_again password ${MYSQL_PASSWORD}"
+      - apt-get install -y mysql-server-5.6
+      - mysql -u ${MYSQL_USER} -p${MYSQL_PASSWORD} -e "CREATE DATABASE ${MYSQL_TABLE};"
       - bundle install
   pre_build:
     commands:
