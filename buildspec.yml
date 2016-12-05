@@ -14,6 +14,7 @@ phases:
       - echo "mysql-server-5.6 mysql-server/root_password password ${MYSQL_PASSWORD}" | debconf-set-selections
       - echo "mysql-server-5.6 mysql-server/root_password_again password ${MYSQL_PASSWORD}" | debconf-set-selections
       - apt-get install -y mysql-server-5.6
+      - service mysqld start
       - mysql -u ${MYSQL_USER} -p${MYSQL_PASSWORD} -e "CREATE DATABASE ${MYSQL_TABLE};"
       - bundle install
   pre_build:
