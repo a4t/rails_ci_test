@@ -4,16 +4,16 @@ default: &default
   pool: 5
   username: <%= ENV['MYSQL_USER'] %>
   password: <%= ENV['MYSQL_PASSWORD'] %>
-  host: <%= ENV['MYSQL_HOST'] %> 
+  host: <%= ENV['MYSQL_HOST'] %>
 
 development:
   <<: *default
-  database: ci_test_development
+  database: <%= ENV['MYSQL_TABLE'] %>_development
 
 test:
   <<: *default
-  database: ci_test_test
+  database: <%= ENV['MYSQL_TABLE'] %>_test
 
 production:
   <<: *default
-  database: ci_test
+  database: <%= ENV['MYSQL_TABLE'] %>
